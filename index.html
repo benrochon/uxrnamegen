@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Title</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<h1>UXR PLATFORM NAME GENERATOR</h1>
+<section id="result">
+    <span id="prefix">UXR</span><span id="suffix">Platform</span>
+    <span id='result'></span>
+</section>
+
+<br />
+<button id='btn'>Generate</button>
+
+
+
+  </body>
+
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+<script>
+
+    let dataURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBMjiFD24cYnghO3moDZLiXNCSdD9U_Q8NS7C4pj5ForRZkopUeeKSotUwWnQLdWN2Q6GgquEA9WZX/pub?gid=0&single=true&output=csv"
+    let csvData;
+    let prefixes=[];
+    let suffixes=[];
+        $(document).ready(function() {
+                csvData = $.ajax({
+                    crossDomain: true,
+                    url: dataURL,
+                    success: function (result) {
+                        let array1 = result.split(/\r\n|\n|\r/)
+                        array1.forEach(element => {
+                            row = element.split(',');
+                            if (row[0]!='') prefixes.push(row[0])
+                            if (row[1]!='') suffixes.push(row[1])
+                        })
+                        console.log(prefixes)
+                        console.log(suffixes)
+                        
+                     },
+                    error:function (result) {
+                       console.log(result)
+                     }
+                    
+                });
+        }) 
+    
+
+    $("#btn").click(function(){
+        let prefix = prefixes[(Math.random() * prefixes.length) | 0]
+        let suffix = suffixes[(Math.random() * suffixes.length) | 0]
+        $("#prefix").text(prefix)
+        $("#suffix").text(suffix)
+    })
+</script>
+
+</html>
+
